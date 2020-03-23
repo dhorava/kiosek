@@ -25,3 +25,8 @@ def forecasty():
         return redirect(url_for('index'))
 
     return render_template('forecasty.html', title='Zaslat forecasty na email', form=form)
+
+
+@app.route('/google10de6de442947866.html')
+def googlewebmastertools():
+    return render_template('google10de6de442947866.html')
