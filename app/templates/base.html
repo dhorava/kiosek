@@ -1,0 +1,26 @@
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - Red Media Kiosek</title>
+      {% else %}
+      <title>Vítej v Red Media Kiosku!</title>
+      {% endif %}
+    </head>
+    <body>
+        <div>Kiosek:
+          <a href="/index">Domů</a>
+          <a href="/forecasty">Forecasty</a>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>
