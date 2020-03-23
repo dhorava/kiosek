@@ -19,7 +19,7 @@ def forecasty():
         email = form.email.data
         flash('Forecasty budou zaslány na email {}'.format(email))
 
-        job_id = 4856
+        job_id = 4857
         db_api.runNow(job_id, email)
 
         return redirect(url_for('index'))
