@@ -14,12 +14,7 @@ class DatabricksAPI():
         url = self.api_url + endpoint
         headers = self.headers
 
-        data = {
-            "job_id": job_id,
-            "notebook_params": {
-                "email": email
-            }
-        }
+        data = '{"job_id":' + str(job_id) + ',"notebook_params":{"email":"' + str(email) + '"}}'
 
         print(url)
         print(headers)
