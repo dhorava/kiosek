@@ -1,5 +1,6 @@
-{% extends "base.html" %}
+{% extends "layout-static.html" %}
 
-{% block content %}
-        <h1>Ahoj, {{ user.username }}!</h1>
+{% block app_content %}
+        <h2>Ahoj, {{ user.username }}!</h2>
+        <img src="static/img/ptacek.gif" />
 {% endblock %}

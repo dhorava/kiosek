@@ -13,7 +13,7 @@ from app.databricks import DatabricksAPI
 @app.route('/index')
 def index():
     user = {'username': 'krabe'}
-    return render_template('layout-static.html', title='Home', user=user)
+    return render_template('index.html', title='Domů', user=user)
 
 
 @app.route('/forecasty', methods=['GET', 'POST'])
