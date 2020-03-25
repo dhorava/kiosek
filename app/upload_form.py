@@ -7,3 +7,8 @@ class MonetaForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     file = FileField('Excel', validators=[FileRequired()])
     submit = SubmitField('Potvrdit')
+
+class CreditasForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired()])
+    file = FileField('Excel', validators=[FileRequired()])
+    submit = SubmitField('Potvrdit')

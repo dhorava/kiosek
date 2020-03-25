@@ -1,8 +1,8 @@
-{% extends "base.html" %}
+{% extends "layout-static.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>Aktualizovat report</h1>
+    <h2>Aktualizovat {{ title }} report</h2>
     <div class="row">
         <div class="col-md-4">
           <form method="POST" enctype="multipart/form-data">

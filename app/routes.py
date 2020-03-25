@@ -6,14 +6,14 @@ from azure.storage.blob import BlockBlobService
 
 from app import app
 from app.form import ForecastsForm
-from app.upload_form import MonetaForm
+from app.upload_form import MonetaForm, CreditasForm
 from app.databricks import DatabricksAPI
 
 @app.route('/')
 @app.route('/index')
 def index():
     user = {'username': 'krabe'}
-    return render_template('index.html', title='Home', user=user)
+    return render_template('layout-static.html', title='Home', user=user)
 
 
 @app.route('/forecasty', methods=['GET', 'POST'])
@@ -31,7 +31,7 @@ def forecasty():
 
         return redirect(url_for('index'))
 
-    return render_template('forecasty.html', title='Zaslat forecasty na email', form=form)
+    return render_template('forecasty.html', title='Forecasty', form=form)
 
 
 @app.route('/moneta', methods=['GET', 'POST'])
@@ -63,7 +63,39 @@ def moneta():
 
         return redirect(url_for('moneta'))
 
-    return render_template('reporty.html', title='Aktualizovat Moneta report', form=form)
+    return render_template('reporty.html', title='Moneta', form=form)
+
+
+@app.route('/creditas', methods=['GET', 'POST'])
+def creditas():
+
+    form = CreditasForm()
+    db_api = DatabricksAPI()
+
+    if form.validate_on_submit():
+        file = request.files['file']
+
+        if 'file' not in request.files:
+            flash('Nebyl vybrán soubor!')
+            return redirect(request.url)
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            account = "redmediadwh"   # Azure account name
+            key = "ePYDdZb74+ZxX1Ij/Ue+nMyMGQePX8fXVyxsllcR3OtEoYneLmnzjAOQC4sxonFCtLhDT3VyCZ9mDhxSQ7aWzw=="      # Azure Storage account access key
+            container = "clients" # Container name
+
+            blob_service = BlockBlobService(account_name=account, account_key=key)
+            blob_service.create_blob_from_stream(container, "creditas/"+filename, file)
+
+            flash('Report je právě aktualizován, informace o dokončení ti přijde na {}'.format(form.email.data))
+            return redirect(url_for('creditas'))
+
+        return redirect(url_for('creditas'))
+
+    return render_template('reporty.html', title='Creditas', form=form)
 
 
 @app.route('/google10de6de442947866.html')
