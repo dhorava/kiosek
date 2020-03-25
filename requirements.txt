@@ -3,3 +3,6 @@ Flask-WTF==0.14.3
 WTForms==2.2.1
 Flask-Bootstrap==3.3.7.1
 requests
+azure-storage==0.31.0
+azure-common==1.1.3
+azure-nspkg==1.0.0
