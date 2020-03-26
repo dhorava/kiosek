@@ -1,6 +1,5 @@
 import os
 import datetime
-import babel
 
 from flask import render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
