@@ -46,7 +46,7 @@
                             <td>{% if (run["state"]["life_cycle_state"] == "PENDING" or run["state"]["life_cycle_state"] == "RUNNING") %}skript běží{% else %}{{ (run["start_time"]+run["setup_duration"] + run["execution_duration"])|datetime("full") }}{% endif %}</td>
                             <td>{% if (run["state"]["life_cycle_state"] == "PENDING" or run["state"]["life_cycle_state"] == "RUNNING") %}{{ run["state"]["life_cycle_state"] }}{% else %}{{ run["state"]["result_state"] }}{% endif %}</td>
                             <td>{{ (run["setup_duration"] + run["execution_duration"])|datetime("min") }}</td>
-                            <td>{% if (run["state"]["life_cycle_state"] == "PENDING" or run["state"]["life_cycle_state"] == "RUNNING") %}csv se generuje{% elif run["state"]["result_state"] == "SUCCESS" %}<a href='{{ "static/downloads/forecasty/forecasty-%d.csv"%run["run_id"] }}'>stáhnout csv<a>{% else %}soubor neexistuje{% endif %}</td>
+                            <td>{% if (run["state"]["life_cycle_state"] == "PENDING" or run["state"]["life_cycle_state"] == "RUNNING") %}csv se generuje{% elif run["state"]["result_state"] == "SUCCESS" %}<a href='{{ "static/uploads/forecasty/forecasty-%d.csv"%run["run_id"] }}'>stáhnout csv<a>{% else %}soubor neexistuje{% endif %}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -39,7 +39,7 @@ def forecasty():
         if(run["state"]["life_cycle_state"] == "RUNNING" or run["state"]["life_cycle_state"] == "PENDING"):
             pass
         elif(run["state"]["result_state"] == "SUCCESS"):
-            local_filename = os.path.join("app/static/downloads/forecasty/", "forecasty-" + str(run["run_id"]) + ".csv")
+            local_filename = os.path.join("app/static/uploads/forecasty/", "forecasty-" + str(run["run_id"]) + ".csv")
             if os.path.isfile(local_filename):
                 #print("exists")
                 pass
@@ -84,7 +84,7 @@ def moneta():
 
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], "moneta/"+filename)
             file.save(filepath)
 
             account = "redmediadwh"   # Azure account name
