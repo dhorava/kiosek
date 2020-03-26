@@ -1,0 +1,28 @@
+{% block title %}
+    {% if title %}{{ title }} - Red Media Kiosek{% else %}Vítej v Red Media Kiosku!{% endif %}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default">
+        <img src="static\img\redmedia-logo-cele.png" height="50" />
+        <a href = "{{ url_for('index') }}">Domů</a>
+        <a href = "{{ url_for('forecasty') }}">Forecasty</a>
+        <a href = "{{ url_for('moneta') }}">Moneta</a>
+    </nav>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    {% block app_content %}{% endblock %}
+  </div>
+{% endblock %}

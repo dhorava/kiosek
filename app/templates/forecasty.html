@@ -1,11 +1,58 @@
-{% extends "layout-static.html" %}
+{% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h2>Zaslat forecasty na email</h2>
-    <div class="row">
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="card mb-4">
+      <div class="card-body">
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="card mb-4">
+        <div class="card-body"><h2>Zaslat forecasty na email</h2></div>
         <div class="col-md-4">
             {{ wtf.quick_form(form) }}
         </div>
     </div>
+    <div class="card mb-4">
+        <div class="card-body"><h2>Poslední spuštění skriptu na stažení forecastů</h2></div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>E-mail</th>
+                            <th>Čas dokončení</th>
+                            <th>Výsledek</th>
+                            <th>Doba trvání</th>
+                            <th>Export</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for run in table["runs"] %}
+                        <tr>
+                            <td>{{ run["run_id"] }}</td>
+                            <td>{{ run["overriding_parameters"]["notebook_params"]["email"] }}</td>
+                            <td>{% if (run["state"]["life_cycle_state"] == "PENDING" or run["state"]["life_cycle_state"] == "RUNNING") %}skript běží{% else %}{{ (run["start_time"]+run["setup_duration"] + run["execution_duration"])|datetime("full") }}{% endif %}</td>
+                            <td>{% if (run["state"]["life_cycle_state"] == "PENDING" or run["state"]["life_cycle_state"] == "RUNNING") %}{{ run["state"]["life_cycle_state"] }}{% else %}{{ run["state"]["result_state"] }}{% endif %}</td>
+                            <td>{{ (run["setup_duration"] + run["execution_duration"])|datetime("min") }}</td>
+                            <td>{% if (run["state"]["life_cycle_state"] == "PENDING" or run["state"]["life_cycle_state"] == "RUNNING") %}csv se generuje{% elif run["state"]["result_state"] == "SUCCESS" %}<a href='{{ "static/downloads/forecasty/forecasty-%d.csv"%run["run_id"] }}'>stáhnout csv<a>{% else %}soubor neexistuje{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

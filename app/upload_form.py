@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired
 
 class MonetaForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
-    file = FileField('Excel', validators=[FileRequired()])
+    file = FileField('Pozor - název souboru musí začínat na "powerbi_leads"! Například tedy "powerbi_leads_25-03-2020.xlsx". V opačném případě skript neproběhne.', validators=[FileRequired()])
     submit = SubmitField('Potvrdit')
 
 class CreditasForm(FlaskForm):
