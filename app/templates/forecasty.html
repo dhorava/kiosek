@@ -18,9 +18,13 @@
     {% endwith %}
 
     <div class="card mb-4">
-        <div class="card-body"><h2>Zaslat forecasty na email</h2></div>
-        <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
+        <div class="card-body">
+          <h2>Zaslat forecasty na email</h2>
+          <div class="col-md-4">
+              {{ wtf.quick_form(form) }}
+          </div>
+          <p> </p>
+          <p>Jak si správně otevřít stažené csv v Excelu? Koukni se na <a href="#navod">návod</a> pod tabulkou.</p>
         </div>
     </div>
     <div class="card mb-4">
@@ -53,6 +57,23 @@
                 </table>
             </div>
         </div>
+    </div>
+
+    <a name="navod"></a>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3>Návod pro otevření csv v Excelu</h3>
+        <p></p>
+        <p>1. Otevři nový prázdný soubor Excelu</p>
+        <p>2. V záložce "Data" vyber možnost "Z textu/CSV" (viz obrázek 1)</p>
+        <img src="static/img/excel-csv-navod-1.png" height="300" />
+        <p></p>
+        <p>3. Vyber daný soubor s forecasty a klikni na "Importovat"</p>
+        <p>4. V dalším okně pak vyber u "Původ souboru" možnost "65001: Unicode (UTF-8)", oddělovač nechej tabulátor a klikni na "Načíst data" (viz obrázek 2)</p>
+        <img src="static/img/excel-csv-navod-2.png" height="300" />
+        <p></p>
+        <p>5. Profit!</p>
+      </div>
     </div>
 
 {% endblock %}
