@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+<div class="card mb-4">
+    <div class="card-body"><h2>{{ title }}</h2></div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="systemy" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Platforma</th>
+                        <th>Master účet</th>
+                        <th>Klientský účet</th>
+                        <th>ID účtu klienta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td><img src='{{ "static/img/logo-%s.png"%row.shortcut }}' height="20" style="margin:0.5rem"/>{{ row.platform }}</td>
+                        <td>{{ row.master }}</td>
+                        <td>{{ row.client }}</td>
+                        <td>{{ row.clientId }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

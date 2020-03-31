@@ -5,6 +5,8 @@ from flask import render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from azure.storage.blob import BlockBlobService
 
+import pyodbc
+
 from app import app
 from app.form import ForecastsForm
 from app.upload_form import MonetaForm, CreditasForm
@@ -17,12 +19,25 @@ def index():
     user = {'username': 'krabe'}
     return render_template('index.html', title='Domů', user=user)
 
+@app.route('/keboola_ucty')
+def keboola_ucty():
+
+    username = app.config['MSSQL_USERNAME']
+    pwd = app.config['MSSQL_PWD']
+    conn = pyodbc.connect('Driver={ODBC Driver 13 for SQL Server};Server=tcp:roiblock.database.windows.net,1433;Database=Campaigns;uid='+username+';pwd='+pwd)
+    cursor = conn.cursor()
+    cursor.execute('select platform, master, client, clientId, shortcut from dbo.KeboolaAccounts')
+
+    data = cursor.fetchall()
+    conn.close()
+
+    return render_template('systemy.html', title='Napojené účty v Keboola', data=data)
 
 @app.route('/forecasty', methods=['GET', 'POST'])
 def forecasty():
 
-    account = "redmediadwh"   # Azure account name
-    key = "ePYDdZb74+ZxX1Ij/Ue+nMyMGQePX8fXVyxsllcR3OtEoYneLmnzjAOQC4sxonFCtLhDT3VyCZ9mDhxSQ7aWzw=="      # Azure Storage account access key
+    account = "redmediadwh" # Azure account name
+    key = app.config['REDMEDIADWH_KEY'] # Azure Storage account access key
     container = "kiosek" # Container name
 
     blob_service = BlockBlobService(account_name=account, account_key=key)
@@ -88,7 +103,7 @@ def moneta():
             file.save(filepath)
 
             account = "redmediadwh"   # Azure account name
-            key = "ePYDdZb74+ZxX1Ij/Ue+nMyMGQePX8fXVyxsllcR3OtEoYneLmnzjAOQC4sxonFCtLhDT3VyCZ9mDhxSQ7aWzw=="      # Azure Storage account access key
+            key = app.config['REDMEDIADWH_KEY'] # Azure Storage account access key
             container = "clients" # Container name
 
             blob_service = BlockBlobService(account_name=account, account_key=key)
@@ -128,7 +143,7 @@ def creditas():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             account = "redmediadwh"   # Azure account name
-            key = "ePYDdZb74+ZxX1Ij/Ue+nMyMGQePX8fXVyxsllcR3OtEoYneLmnzjAOQC4sxonFCtLhDT3VyCZ9mDhxSQ7aWzw=="      # Azure Storage account access key
+            key = app.config['REDMEDIADWH_KEY'] # Azure Storage account access key
             container = "clients" # Container name
 
             blob_service = BlockBlobService(account_name=account, account_key=key)

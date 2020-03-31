@@ -17,9 +17,11 @@
 {% endif %}
 {% endwith %}
 <div class="card mb-4">
-    <div class="card-body"><h2>Aktualizovat {{ title }} report</h2></div>
-    <div class="col-md-4">
-        {{ wtf.quick_form(form) }}
+    <div class="card-body">
+      <h2>Aktualizovat {{ title }} report</h2>
+      <div class="col-md-8">
+          {{ wtf.quick_form(form) }}
+      </div>
     </div>
 </div>
 <div class="card mb-4">
